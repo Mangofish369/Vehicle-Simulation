@@ -5,11 +5,18 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Ambulance extends Vehicle
 {
+    
     public Ambulance(VehicleSpawner origin){
         super (origin); // call the superclass' constructor first
         
         maxSpeed = 2.5;
         speed = maxSpeed;
+        /*
+         * Check image height and width
+         */
+        //System.out.println("Width: "+getImage().getWidth()+"\nHeight: "+getImage().getHeight());
+        GreenfootImage ambulance = getImage();
+        ambulance.scale(100,50);
     }
 
     /**
@@ -19,11 +26,15 @@ public class Ambulance extends Vehicle
     public void act()
     {
         super.act();
-        
     }
 
     public boolean checkHitPedestrian () {
-        // currently empty
+        Pedestrian p = (Pedestrian)getOneObjectAtOffset((int)speed + getImage().getWidth()/2, 0, Pedestrian.class);
+        if(p != null && !p.isAwake()){
+            p.healMe();
+            System.out.println("heal");
+            return true;
+        }
         return false;
     }
 }

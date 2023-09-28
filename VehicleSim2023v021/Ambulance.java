@@ -32,7 +32,6 @@ public class Ambulance extends Vehicle
         Pedestrian p = (Pedestrian)getOneObjectAtOffset((int)speed + getImage().getWidth()/2, 0, Pedestrian.class);
         if(p != null && !p.isAwake()){
             p.healMe();
-            System.out.println("heal");
             return true;
         }
         return false;

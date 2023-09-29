@@ -5,6 +5,9 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Bus extends Vehicle
 {
+    public static final int STOP_DURATION = 1000;
+    SimpleTimer stop = new SimpleTimer();
+    private boolean moving = true;
     public Bus(VehicleSpawner origin){
         super (origin); // call the superclass' constructor first
         
@@ -21,14 +24,24 @@ public class Bus extends Vehicle
      */
     public void act()
     {
-       super.act();
+        if(moving){
+            super.act();
+        }
+        else{
+            if(stop.millisElapsed() >= 1000){
+                moving = true;
+            }
+        }
+        
     }
 
     public boolean checkHitPedestrian () {
         Pedestrian p = (Pedestrian)getOneObjectAtOffset((int)speed + getImage().getWidth()/2, 0, Pedestrian.class);
         if( p!= null && p.isAwake()){
             getWorld().removeObject(p);
-            return true;
+            moving = false;
+            stop.mark();
+            return true; 
         }
         return false;
     }

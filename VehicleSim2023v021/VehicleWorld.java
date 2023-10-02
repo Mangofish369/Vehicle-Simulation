@@ -40,6 +40,10 @@ public class VehicleWorld extends World
     private int[] lanePositionsY;
     private VehicleSpawner[] laneSpawners;
     private boolean crime;
+    
+    //Timer
+    public static final int DELAY_SPAWN_DURATION = 50;
+    SimpleTimer policeDelay = new SimpleTimer();
 
     /**
      * Constructor for objects of class MyWorld.
@@ -93,20 +97,28 @@ public class VehicleWorld extends World
 
     private void spawn () {
         // Chance to spawn a vehicle
+        int speedingLane = 0;
         if (Greenfoot.getRandomNumber (60) == 0){
             int lane = Greenfoot.getRandomNumber(laneCount);
             if (!laneSpawners[lane].isTouchingVehicle()){
-                int vehicleType = Greenfoot.getRandomNumber(4);
+                int vehicleType = Greenfoot.getRandomNumber(3);
                 if (vehicleType == 0){
-                    //addObject(new Car(laneSpawners[lane]), 0, 0);
-                    addObject(Pedestrian carl = new Pedestrian(1),100,100);
+                    Car car = new Car(laneSpawners[lane]);
+                    addObject(car,0,0);
+                    double speed = car.getSpeed();
+                    speedingLane = lane;
+                    if(speed > 4){
+                        crime = true;
+                    }
                 } else if (vehicleType == 1){
                     addObject(new Bus(laneSpawners[lane]), 0, 0);
                 } else if (vehicleType == 2){
                     addObject(new Ambulance(laneSpawners[lane]), 0, 0);
-                } else if(vehicleType == 3){
-                    addObject(new Police(laneSpawners[lane]), 0,0);
-                }
+                } 
+                if (crime == true){
+                    addObject(new Police(laneSpawners[speedingLane]), -1000,0);
+                    crime = false;
+                } 
             }
         }
 

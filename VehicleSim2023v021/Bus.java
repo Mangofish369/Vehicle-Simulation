@@ -28,7 +28,7 @@ public class Bus extends Vehicle
             super.act();
         }
         else{
-            if(stop.millisElapsed() >= 1000){
+            if(stop.millisElapsed() >= STOP_DURATION){
                 moving = true;
             }
         }

@@ -39,6 +39,7 @@ public class VehicleWorld extends World
     private int laneHeight, laneCount, spaceBetweenLanes;
     private int[] lanePositionsY;
     private VehicleSpawner[] laneSpawners;
+    private boolean crime;
 
     /**
      * Constructor for objects of class MyWorld.
@@ -97,13 +98,14 @@ public class VehicleWorld extends World
             if (!laneSpawners[lane].isTouchingVehicle()){
                 int vehicleType = Greenfoot.getRandomNumber(4);
                 if (vehicleType == 0){
-                    addObject(new Car(laneSpawners[lane]), 0, 0);
+                    //addObject(new Car(laneSpawners[lane]), 0, 0);
+                    addObject(Pedestrian carl = new Pedestrian(1),100,100);
                 } else if (vehicleType == 1){
                     addObject(new Bus(laneSpawners[lane]), 0, 0);
                 } else if (vehicleType == 2){
                     addObject(new Ambulance(laneSpawners[lane]), 0, 0);
                 } else if(vehicleType == 3){
-                    addObject(new Truck(laneSpawners[lane]), 0,0);
+                    addObject(new Police(laneSpawners[lane]), 0,0);
                 }
             }
         }

@@ -6,20 +6,20 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Truck extends Vehicle
+public class Police extends Vehicle
 {
     /**
      * Act - do whatever the truck wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
-    public Truck (VehicleSpawner origin){
+    public Police (VehicleSpawner origin){
         super(origin);
         
         maxSpeed = 2.5;
         speed = maxSpeed;
         
-        GreenfootImage truck = getImage();
-        truck.scale(100,50);
+        GreenfootImage police = getImage();
+        police.scale(100,50);
     }
     public void act()
     {

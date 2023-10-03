@@ -72,11 +72,11 @@ public class VehicleWorld extends World
         setBackground (background);
 
         // Set critical variables - will affect lane drawing
-        laneCount = 8;
+        laneCount = 4;
         laneHeight = 48;
         spaceBetweenLanes = 6;
-        splitAtCenter = false;
-        twoWayTraffic = false;
+        splitAtCenter = true;
+        twoWayTraffic = true;
 
         // Init lane spawner objects 
         laneSpawners = new VehicleSpawner[laneCount];
@@ -127,9 +127,9 @@ public class VehicleWorld extends World
             int xSpawnLocation = Greenfoot.getRandomNumber (600) + 100; // random between 99 and 699, so not near edges
             boolean spawnAtTop = Greenfoot.getRandomNumber(2) == 0 ? true : false;
             if (spawnAtTop){
-                addObject (new Pedestrian (1), xSpawnLocation, TOP_SPAWN);
+                addObject (new Biker (1), xSpawnLocation, TOP_SPAWN);
             } else {
-                addObject (new Pedestrian (-1), xSpawnLocation, BOTTOM_SPAWN);
+                addObject (new Biker (-1), xSpawnLocation, BOTTOM_SPAWN);
             }
         }
 

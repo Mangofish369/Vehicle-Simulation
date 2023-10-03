@@ -3,12 +3,12 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 /**
  * A Pedestrian that tries to walk across the street
  */
-public class Pedestrian extends SuperSmoothMover
+public abstract class Pedestrian extends SuperSmoothMover
 {
-    private double speed;
-    private double maxSpeed;
-    private int direction; // direction is always -1 or 1, for moving down or up, respectively
-    private boolean awake, gettingUp;
+    protected double speed;
+    protected double maxSpeed;
+    protected int direction; // direction is always -1 or 1, for moving down or up, respectively
+    protected boolean awake, gettingUp;
     public Pedestrian(int direction) {
         // choose a random speed
         maxSpeed = Math.random() * 2 + 1;

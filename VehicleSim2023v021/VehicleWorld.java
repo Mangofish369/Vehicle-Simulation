@@ -1,6 +1,8 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.util.Collections;
 import java.util.ArrayList; //hello
+import java.util.Queue;
+import java.util.LinkedList;
 /**
  * <h1>The new and vastly improved 2022 Vehicle Simulation Assignment.</h1>
  * <p> This is the first redo of the 8 year old project. Lanes are now drawn dynamically, allowing for
@@ -42,8 +44,10 @@ public class VehicleWorld extends World
     private boolean crime;
     
     //Timer
-    public static final int DELAY_SPAWN_DURATION = 50;
+    public static final int DELAY_SPAWN_DURATION = 60;
+    private int timer = 0;
     SimpleTimer policeDelay = new SimpleTimer();
+    Queue<Integer> speedingLane = new LinkedList<>();
 
     /**
      * Constructor for objects of class MyWorld.
@@ -72,7 +76,7 @@ public class VehicleWorld extends World
         setBackground (background);
 
         // Set critical variables - will affect lane drawing
-        laneCount = 4;
+        laneCount = 8;
         laneHeight = 48;
         spaceBetweenLanes = 6;
         splitAtCenter = true;
@@ -91,13 +95,15 @@ public class VehicleWorld extends World
     }
 
     public void act () {
+        if(crime){
+            timer++;
+        }
         spawn();
         zSort ((ArrayList<Actor>)(getObjects(Actor.class)), this);
     }
 
     private void spawn () {
         // Chance to spawn a vehicle
-        int speedingLane = 0;
         if (Greenfoot.getRandomNumber (60) == 0){
             int lane = Greenfoot.getRandomNumber(laneCount);
             if (!laneSpawners[lane].isTouchingVehicle()){
@@ -106,9 +112,10 @@ public class VehicleWorld extends World
                     Car car = new Car(laneSpawners[lane]);
                     addObject(car,0,0);
                     double speed = car.getSpeed();
-                    speedingLane = lane;
                     if(speed > 4){
                         crime = true;
+                        speedingLane.offer(lane);
+                        System.out.println("Queue: "+speedingLane);
                     }
                 } else if (vehicleType == 1){
                     addObject(new Bus(laneSpawners[lane]), 0, 0);
@@ -116,8 +123,12 @@ public class VehicleWorld extends World
                     addObject(new Ambulance(laneSpawners[lane]), 0, 0);
                 } 
                 if (crime == true){
-                    addObject(new Police(laneSpawners[speedingLane]), -1000,0);
-                    crime = false;
+                    if(timer >= DELAY_SPAWN_DURATION){
+                        int chase = speedingLane.poll();
+                        addObject(new Police(laneSpawners[chase]), -1000,0);
+                        crime = false;
+                        timer = 0;
+                    }
                 } 
             }
         }

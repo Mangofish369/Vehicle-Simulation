@@ -124,8 +124,11 @@ public class VehicleWorld extends World
                 } 
                 if (crime == true){
                     if(timer >= DELAY_SPAWN_DURATION){
-                        int chase = speedingLane.poll();
-                        addObject(new Police(laneSpawners[chase]), -1000,0);
+                        //System.out.println(speedingLane.isEmpty());
+                        while(!speedingLane.isEmpty()){
+                            int chase = speedingLane.poll();
+                            addObject(new Police(laneSpawners[chase]), -1000,0);
+                        }
                         crime = false;
                         timer = 0;
                     }

@@ -1,20 +1,18 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-
-/**
- * Write a description of class biker here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
- */
 public class Biker extends Pedestrian
 {
+    private double speed;
+    private double maxSpeed;
     public Biker(int direction){
         super(direction);
+        if(direction == -1){
+            setImage("images/Back-biker.png");
+        }
+        GreenfootImage biker = getImage();
+        biker.scale(40,60);
+        maxSpeed = Math.random() * 2 + 3;
+        speed = maxSpeed;
     }
-    /**
-     * Act - do whatever the biker wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
     public void act()
     {
         super.act();

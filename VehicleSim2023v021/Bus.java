@@ -37,10 +37,17 @@ public class Bus extends Vehicle
 
     public boolean checkHitPedestrian () {
         Pedestrian p = (Pedestrian)getOneObjectAtOffset((int)speed + getImage().getWidth()/2, 0, Pedestrian.class);
+        Walker w = (Walker)getOneObjectAtOffset((int)speed + getImage().getWidth()/2, 0, Walker.class);
+        Biker b = (Biker)getOneObjectAtOffset((int)speed + getImage().getWidth()/2, 0, Biker.class);
         if( p!= null && p.isAwake()){
-            getWorld().removeObject(p);
-            moving = false;
-            stop.mark();
+            if(w != null){
+                getWorld().removeObject(p);
+                moving = false;
+                stop.mark();
+            }
+            else if(b!= null){
+                p.knockDown();
+            }
             return true; 
         }
         return false;

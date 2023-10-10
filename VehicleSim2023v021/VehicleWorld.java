@@ -140,10 +140,19 @@ public class VehicleWorld extends World
         if (Greenfoot.getRandomNumber (60) == 0){
             int xSpawnLocation = Greenfoot.getRandomNumber (600) + 100; // random between 99 and 699, so not near edges
             boolean spawnAtTop = Greenfoot.getRandomNumber(2) == 0 ? true : false;
+            int pedestrianType = Greenfoot.getRandomNumber(2);
             if (spawnAtTop){
-                addObject (new Biker (1), xSpawnLocation, TOP_SPAWN);
+                if(pedestrianType == 0){
+                    addObject(new Walker(1), xSpawnLocation, TOP_SPAWN);
+                } else if (pedestrianType == 1) {
+                    addObject (new Biker (1), xSpawnLocation, TOP_SPAWN);
+                }
             } else {
-                addObject (new Biker (-1), xSpawnLocation, BOTTOM_SPAWN);
+                if (pedestrianType == 0){
+                    addObject(new Walker (-1), xSpawnLocation, BOTTOM_SPAWN);
+                } else if (pedestrianType == 1){
+                    addObject(new Biker (-1), xSpawnLocation, BOTTOM_SPAWN);
+                }
             }
         }
 
